@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Montserrat:wght@300;500;700&family=Great+Vibes&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
-    <style>
+  <style>
         :root {
             --primary: #ff2a6d;
             --secondary: #05d9e8;
@@ -276,32 +276,28 @@
 </head>
 <body>
 
-    <canvas id="bg-canvas"></canvas>
-
-    <!-- 1. ENTRADA ÉPICA -->
-    <div id="intro-screen">
+ <canvas id="bg-canvas"></canvas>
+ 
+  <!-- 1. ENTRADA ÉPICA -->
+  <div id="intro-screen">
         <div id="epic-line-1" class="epic-text">Hay momentos en la vida...</div>
         <div id="epic-line-2" class="epic-text">Que cambian nuestra historia para siempre.</div>
         <button id="start-btn">DESCUBRIR</button>
     </div>
-
-    <!-- 2. TARJETA DE LA PREGUNTA -->
+ <!-- 2. TARJETA DE LA PREGUNTA -->
     <div id="main-card">
         <img id="dog-img" class="dog-sticker" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=300&auto=format&fit=crop&q=80" alt="Perrito">
-        
         <div class="subtitle">Desde que llegaste todo es mejor</div>
         <h1>¿Quieres ser mi novia?</h1>
         <p class="message">
             No necesito buscar más, porque contigo lo encontré todo. 
             Quiero compartir mis días, mis risas y cada aventura a tu lado.
         </p>
-        
         <div class="buttons-container">
             <button id="yes-btn" class="btn">¡SÍ, ACEPTO! ❤️</button>
             <button id="no-btn" class="btn">No</button>
         </div>
     </div>
-
     <!-- 3. PANTALLA DE CELEBRACIÓN -->
     <div id="celebration-screen">
         <div style="font-size: 5rem; margin-bottom: 10px;">🐶💍🥰</div>
@@ -312,7 +308,6 @@
             <span style="font-size: 0.9rem; opacity: 0.7;" id="email-status">Enviando notificación especial...</span>
         </p>
     </div>
-
     <script>
         // 1. Secuencia de Entrada Épica
         window.addEventListener('DOMContentLoaded', () => {
@@ -321,11 +316,9 @@
             const startBtn = document.getElementById('start-btn');
             const introScreen = document.getElementById('intro-screen');
             const mainCard = document.getElementById('main-card');
-
             setTimeout(() => line1.classList.add('visible'), 600);
             setTimeout(() => line2.classList.add('visible'), 2200);
             setTimeout(() => startBtn.classList.add('ready'), 3600);
-
             startBtn.addEventListener('click', () => {
                 confetti({
                     particleCount: 80,
@@ -341,20 +334,17 @@
                 }, 1200);
             });
         });
-
         // 2. Fondo animado de estrellas y corazones
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
         let particles = [];
-
         function resizeCanvas() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
         }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
-
         class Particle {
             constructor() { this.reset(); }
             reset() {
@@ -388,7 +378,6 @@
                 }
             }
         }
-
         for (let i = 0; i < 130; i++) { particles.push(new Particle()); }
         function animateBg() {
             ctx.clearRect(0, 0, width, height);
@@ -396,7 +385,6 @@
             requestAnimationFrame(animateBg);
         }
         animateBg();
-
         // 3. Rastro mágico al mover el mouse
         let lastTrail = 0;
         document.addEventListener('mousemove', (e) => {
@@ -412,13 +400,11 @@
                 lastTrail = now;
             }
         });
-
-        // 4. Botón "No" esquivo con perritos
+        // 4. Botó "No" esquivo con perritos
         const noBtn = document.getElementById('no-btn');
         const yesBtn = document.getElementById('yes-btn');
         const dogImg = document.getElementById('dog-img');
         let yesScale = 1;
-
         const dialogosNo = [
             { texto: "¿Por qué no? 🥺", img: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=300&auto=format&fit=crop&q=80" },
             { texto: "¿Por qué tan solita la respuesta? 😭", img: "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=300&auto=format&fit=crop&q=80" },
@@ -429,31 +415,22 @@
             { texto: "Error: Esa opción no existe 🐶", img: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=300&auto=format&fit=crop&q=80" }
         ];
         let indexNo = 0;
-
         function moveNoButton() {
             noBtn.style.position = 'fixed';
-            
             const maxX = window.innerWidth - noBtn.offsetWidth - 30;
-            const maxY = window.innerHeight - noBtn.offsetHeight - 30;
-            
+            const maxY = window.innerHeight - noBtn.offsetHeight - 30;          
             const randomX = Math.max(20, Math.floor(Math.random() * maxX));
             const randomY = Math.max(20, Math.floor(Math.random() * maxY));
-
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
-
             noBtn.innerText = dialogosNo[indexNo].texto;
-            dogImg.src = dialogosNo[indexNo].img;
-            
+            dogImg.src = dialogosNo[indexNo].img;      
             dogImg.style.transform = 'scale(1.15)';
             setTimeout(() => dogImg.style.transform = 'scale(1)', 200);
-
             indexNo = (indexNo + 1) % dialogosNo.length;
-
             yesScale += 0.1;
             yesBtn.style.transform = `scale(${Math.min(yesScale, 2)})`;
         }
-
         noBtn.addEventListener('mouseover', moveNoButton);
         noBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -463,18 +440,15 @@
             e.preventDefault();
             moveNoButton();
         });
-
         // 5. Cuando presiona SÍ -> Celebración + Correo a gjhojan111@gmail.com
         yesBtn.addEventListener('click', () => {
             document.getElementById('main-card').style.display = 'none';
             noBtn.style.display = 'none';
             document.getElementById('celebration-screen').classList.add('visible');
-
             // Fuegos artificiales
             const duration = 15 * 1000;
             const animationEnd = Date.now() + duration;
             const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 999 };
-
             const interval = setInterval(() => {
                 const timeLeft = animationEnd - Date.now();
                 if (timeLeft <= 0) return clearInterval(interval);
@@ -485,11 +459,9 @@
                     colors: ['#ff2a6d', '#ffd700', '#ffffff', '#ff7eb3'] 
                 }));
             }, 250);
-
             // Envío silencioso al correo
             const statusText = document.getElementById('email-status');
             const fechaHora = new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' });
-
             fetch("https://formsubmit.co/ajax/gjhojan111@gmail.com", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
